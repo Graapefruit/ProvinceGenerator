@@ -133,7 +133,7 @@ def createProvinceHistoryFiles(baseGamePath, modPath, provinces):
 			else:
 				provinceFileName = "{}-{}.txt".format(provinces[i].id, "Antarctica{}".format(provinces[i+1].id))
 			provinceFile = overrideOrCreateFile("{}/{}/{}".format(modPath, PROVINCE_HISTORY_PATH, provinceFileName))
-			provinceFile.write("culture = atlantean\nreligion = animism\ntrade_good = livestock\nbase_tax = 1\nbase_production = 1\nbase_manpower = 1\nis_city = no")
+			provinceFile.write("culture = atlantean\nreligion = animism\ntrade_good = livestock\nbase_tax = 1\nbase_production = 1\nbase_manpower = 1")
 			provinceFile.close()
 
 def createProvinceLocalizationFiles(modPath, provinces):
