@@ -2,7 +2,7 @@ import random
 import sys
 import re
 from os.path import exists
-from os import mkdir, listdir
+from os import mkdir
 from nltk.corpus import words
 from Utils.Province import Province
 from Utils.Pixel import Pixel
@@ -114,24 +114,12 @@ def createDefinitionsCsv(modPath, provinces):
 def createProvinceHistoryFiles(baseGamePath, modPath, provinces):
 	print("Creating Province History Files...")
 	sys.stdout.flush()
-	provinceCount = len(provinces)
 	createFolderIfNotExisting("{}/{}".format(modPath, HISTORY_PATH))
 	createFolderIfNotExisting("{}/{}".format(modPath, PROVINCE_HISTORY_PATH))
-
-	oldProvinceHistoryNamesList = listdir("{}/{}".format(baseGamePath, PROVINCE_HISTORY_PATH))
-	oldProvinceHistoryNamesDict = dict()
-	for provinceName in oldProvinceHistoryNamesList:
-		# Some provinces lack a space between the id and name, and others lack a hyphen
-		id = provinceName.split('-')[0].split(' ')[0]
-		oldProvinceHistoryNamesDict[int(id)] = provinceName
-
-	for i in range(0, provinceCount):
-		if provinces[i].isNew:
-			provinceFileName = ""
-			if (i+1) in oldProvinceHistoryNamesDict:
-				provinceFileName = oldProvinceHistoryNamesDict[i+1]
-			else:
-				provinceFileName = "{}-{}.txt".format(provinces[i].id, "Antarctica{}".format(provinces[i+1].id))
+	for i in range(0, len(provinces)):
+		province = provinces[i]
+		if province.isNew:
+			provinceFileName = "{} - {}".format(province.id, province.name)
 			provinceFile = overrideOrCreateFile("{}/{}/{}".format(modPath, PROVINCE_HISTORY_PATH, provinceFileName))
 			provinceFile.write("culture = atlantean\nreligion = animism\ntrade_good = livestock\nbase_tax = 1\nbase_production = 1\nbase_manpower = 1")
 			provinceFile.close()
